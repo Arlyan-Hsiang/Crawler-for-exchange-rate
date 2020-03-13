@@ -8,19 +8,19 @@ class AppWindow(QDialog):
         super().__init__()
         self.ui = Ui_NZDtoTWD()
         self.ui.setupUi(self)
-        #綁上點擊事件
+        #Click
         self.ui.pushButton.clicked.connect(self.pushButton_Click)
         self.show()
     
     def pushButton_Click(self):
-        #讀取兆豐匯率網頁
+        #read the websit
         url="http://rate.megabank.com.tw/bulletin02_02.asp"
-        #建立request 物件
+        #Establish request object
         request=req.Request(url)
         with req.urlopen(request) as response:
             data=response.read().decode("utf-8")
         root=bs4.BeautifulSoup(data,"html.parser")
-        #找出匯率欄位
+        #find the target cell
         exchange_details=root.find_all("tr", class_="tbcolor2")
         read=0
         for exchange_detail in exchange_details:
